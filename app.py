@@ -18,7 +18,7 @@ st.set_page_config(
 # ===== CABEÇALHO COM IMAGEM =====
 st.image(
     "assets/logo_cores.png",
-    use_column_width=True
+     width=300 
 )
 
 st.title("CSV → Excel")
@@ -71,5 +71,6 @@ if csv_file is not None:
         # Erro genérico (mostrado ao utilizador)
         st.error("Erro ao converter o ficheiro CSV.")
         st.exception(e)
+
 
 
