@@ -1,32 +1,22 @@
 # CSV → Excel
 
-Aplicação web em Python que converte ficheiros CSV em Excel (.xlsx)
-através de uma interface simples para utilizadores não técnicos.
+Web application built with Python and Streamlit that converts CSV files into Excel (.xlsx)
+through a simple interface designed for non-technical users.
 
-## Tecnologias
+## Technologies
 - Streamlit
 - Pandas
 - OpenPyXL
 
-## Funcionalidades
-- Upload de ficheiro CSV
-- Conversão automática para Excel
-- Download do ficheiro convertido
+## Features
+- Upload CSV files
+- Automatic conversion to Excel format
+- Download the converted file
+- No installation required for end users
 
-## Estado do projeto
-- Estrutura inicial criada
-- Dependências configuradas
+## Installation (local development)
 
-- Interface básica criada com Streamlit
-
-## Instalação (ambiente local)
-
-As dependências do projeto são instaladas com `pip`, o gestor de pacotes do Python.
+Project dependencies are installed using `pip`, the Python package manager.
 
 ```bash
 pip install -r requirements.txt
-
-## Deployment
-
-The app is deployed on Streamlit Community Cloud and sourced from GitHub.
-End users only need to access the public URL to use the application.
