@@ -15,15 +15,18 @@ st.set_page_config(
     layout="centered"
 )
 
-# ===== CABEÇALHO COM LOGO CENTRADO (ESTÁVEL) =====
+# ===== CENTRAR IMAGENS DO STREAMLIT (ESTÁVEL) =====
 st.markdown(
     """
-    <div style="text-align: center;">
-        <img src="assets/logo.png" width="150">
-    </div>
+    <style>
+      div.stImage > img {display: block; margin-left: auto; margin-right: auto;}
+    </style>
     """,
     unsafe_allow_html=True
 )
+
+# ===== LOGO NO CABEÇALHO =====
+st.image("assets/logo.png", width=250)  # ajusta: 200 / 250 / 300
 
 
 st.title("CSV → Excel")
@@ -76,6 +79,7 @@ if csv_file is not None:
         # Erro genérico (mostrado ao utilizador)
         st.error("Erro ao converter o ficheiro CSV.")
         st.exception(e)
+
 
 
 
