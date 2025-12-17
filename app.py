@@ -19,7 +19,7 @@ st.set_page_config(
 col1, col2, col3 = st.columns([1, 2, 1])
 
 with col2:
-    st.image("assets/logo.png", width=250)
+    st.image("assets/logo_cores.png", width=250)
 
 st.title("CSV → Excel")
 st.write("Carrega um ficheiro CSV e faz download do Excel convertido.")
@@ -71,6 +71,7 @@ if csv_file is not None:
         # Erro genérico (mostrado ao utilizador)
         st.error("Erro ao converter o ficheiro CSV.")
         st.exception(e)
+
 
 
 
