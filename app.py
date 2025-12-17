@@ -8,13 +8,21 @@ import pandas as pd
 from io import BytesIO
 
 
-# Configuração básica da página
-st.set_page_config(page_title="CSV → Excel", page_icon="📄")
+# Configuração da página
+st.set_page_config(
+    page_title="CSV → Excel",
+    page_icon="📄",
+    layout="centered"
+)
+
+# ===== CABEÇALHO COM IMAGEM =====
+st.image(
+    "assets/logo.png",
+    use_column_width=True
+)
 
 st.title("CSV → Excel")
 st.write("Carrega um ficheiro CSV e faz download do Excel convertido.")
-
-
 # Upload do ficheiro CSV
 csv_file = st.file_uploader("Carregar CSV", type=["csv"])
 
@@ -63,3 +71,4 @@ if csv_file is not None:
         # Erro genérico (mostrado ao utilizador)
         st.error("Erro ao converter o ficheiro CSV.")
         st.exception(e)
+
