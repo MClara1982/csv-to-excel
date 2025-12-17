@@ -1,50 +1,53 @@
-# Importa o Streamlit, que serve para criar a interface web (UI)
+# Interface web
 import streamlit as st
 
-# Importa o Pandas, usado para ler o CSV e trabalhar com dados em tabelas
+# Leitura e manipulação de CSV
 import pandas as pd
 
-# Importa BytesIO para guardar o ficheiro Excel em memória
-# (sem criar ficheiros temporários no disco)
+# Para criar o ficheiro Excel em memória
 from io import BytesIO
 
 
-# Configuração básica da página (título no browser e ícone)
+# Configuração básica da página
 st.set_page_config(page_title="CSV → Excel", page_icon="📄")
 
-# Título principal da aplicação
-st.title("CSV-to-Excel")
-
-# Texto explicativo simples para o utilizador
+st.title("CSV → Excel")
 st.write("Carrega um ficheiro CSV e faz download do Excel convertido.")
 
 
-# Cria um botão de upload de ficheiros
-# Aceita apenas ficheiros com extensão .csv
+# Upload do ficheiro CSV
 csv_file = st.file_uploader("Carregar CSV", type=["csv"])
 
 
-# Verifica se o utilizador já carregou um ficheiro
 if csv_file is not None:
     try:
-        # Lê o ficheiro CSV carregado e converte-o num DataFrame (tabela)
-        df = pd.read_csv(csv_file)
+        # Lê o CSV assumindo:
+        # - separador por vírgulas
+        # - primeira linha é lixo (título)
+        # - segunda linha contém os cabeçalhos
+        # - ignora linhas vazias
+        df = pd.read_csv(
+            csv_file,
+            sep=",",
+            skiprows=1,          # ignora "01-SAPATAS,,,"
+            encoding="latin-1",  # comum em ficheiros PT
+            skip_blank_lines=True
+        )
 
-        # Cria um buffer em memória para guardar o ficheiro Excel
+        # Remove linhas completamente vazias (segurança extra)
+        df = df.dropna(how="all")
+
+        # Cria o ficheiro Excel em memória
         output = BytesIO()
-
-        # Cria o ficheiro Excel usando o motor openpyxl
         with pd.ExcelWriter(output, engine="openpyxl") as writer:
-            # Escreve os dados do DataFrame para o Excel
             df.to_excel(writer, index=False)
 
-        # Volta o cursor do buffer para o início
         output.seek(0)
 
-        # Mostra uma mensagem de sucesso na interface
-        st.success("Conversão concluída")
+        # Mensagem de sucesso
+        st.success("Conversão concluída com sucesso")
 
-        # Cria um botão para o utilizador descarregar o ficheiro Excel
+        # Botão para descarregar o Excel
         st.download_button(
             label="Descarregar Excel",
             data=output,
@@ -52,6 +55,11 @@ if csv_file is not None:
             mime="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
         )
 
+        # Pré-visualização dos dados
+        st.subheader("Pré-visualização")
+        st.dataframe(df.head(20))
+
     except Exception as e:
-        # Caso ocorra algum erro durante a leitura ou conversão
+        # Erro genérico (mostrado ao utilizador)
         st.error("Erro ao converter o ficheiro CSV.")
+        st.exception(e)
