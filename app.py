@@ -19,7 +19,9 @@ st.set_page_config(
 st.markdown(
     """
     <style>
-      div.stImage > img {display: block; margin-left: auto; margin-right: auto;}
+      /* Centra QUALQUER imagem do componente st.image */
+      [data-testid="stImage"] {display: flex; justify-content: center;}
+      [data-testid="stImage"] img {margin: 0 auto;}
     </style>
     """,
     unsafe_allow_html=True
@@ -79,6 +81,7 @@ if csv_file is not None:
         # Erro genérico (mostrado ao utilizador)
         st.error("Erro ao converter o ficheiro CSV.")
         st.exception(e)
+
 
 
 
